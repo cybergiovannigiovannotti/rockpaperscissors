@@ -1,0 +1,75 @@
+import random 
+
+def get_player_choice():
+    choice = input("Choose Rock, Paper, or Scissors: ").strip().lower()
+    while choice not in ["rock", "paper", "scissors"]:
+        print("Invalid choice. Try again.")
+        choice = input("Choose Rock, Paper, or Scissors: ").strip().lower()
+    return choice
+
+def get_computer_choice():
+    return random.choice(["rock", "paper", "scissors"])
+
+def determine_winner(player, computer):
+    if player == computer:
+        return "tie"
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "paper" and computer == "rock") or \
+         (player == "scissors" and computer == "paper"):
+        return "player"
+    else:
+        return "computer"
+
+def play_round():
+    computer = get_computer_choice()
+    player = get_player_choice()
+    
+    print(f"Computer chose: {computer.title()}")
+    print(f"You chose: {player.title()}")
+    
+
+    result = determine_winner(player, computer)
+
+    if result == "player":
+        print("You win this round!")
+    elif result == "computer":
+        print("Computer wins this round!")
+    else:
+        print("It's a tie!")
+
+    return result
+
+def tournament_mode():
+    print("Welcome to rock paper scissors Tournament Mode!")
+    print("First to 3 wins the tournament.\n")
+
+    player_score = 0
+    computer_score = 0
+    winning_score = 3
+
+    while player_score < winning_score and computer_score < winning_score:
+        print(f"\nScore → You: {player_score} | Computer: {computer_score}")
+        result = play_round()
+
+        if result == "player":
+            player_score += 1
+        elif result == "computer":
+            computer_score += 1
+
+    print("Tournament Over!")
+    print(f"Final Score → You: {player_score} | Computer: {computer_score}")
+
+    if player_score > computer_score:
+        print("You are the Tournament Champion!")
+    else:
+        print("The Computer Wins the Tournament!")
+
+def main():
+    while True:
+        tournament_mode()
+        again = input("\nPlay another tournament? (Yes/No): ").strip().lower()
+        if again != "yes":
+            print("Thanks for playing! See You Next Time.")
+            break
+
+main()
